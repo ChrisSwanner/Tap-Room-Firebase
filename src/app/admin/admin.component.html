@@ -1,0 +1,49 @@
+<div class="card">
+  <div class="card-title">
+    <h3>Add New Keg</h3>
+  </div>
+  <div class="card-body">
+    <div>
+      <div>
+        <label>Name:</label>
+        <br>
+        <input #newName>
+      </div>
+
+      <div>
+        <label>Alcohol Content</label>
+        <br>
+        <input type="number" #newAlcoholContent>
+      </div>
+
+      <div>
+        <label>Price:</label>
+        <br>
+        <input type="number" #newPrice>
+      </div>
+
+      <div>
+        <label>Style:</label>
+        <br>
+        <select #newStyle>
+                  <option value="IPA">IPA</option>
+                  <option value="APA">APA</option>
+                  <option value="Red Ale">Red Ale</option>
+                  <option value="Pilsner">Pilsner</option>
+                  <option value="Brown Ale">Brown Ale</option>
+                  <option value="Kolsch">Kolsch</option>
+                  <option value="Belgian">Belgian</option>
+                  <option value="Hefeweizen">Hefeweizen</option>
+                  <option value="Sour">Sour</option>
+                  <option value="Lager">Lager</option>
+                  <option value="Stout">Stout</option>
+                </select>
+      </div>
+        <button class="btn btn-dark"(click)="submitForm(newName.value, newAlcoholContent.value, newPrice.value, newStyle.value); newName.value=''; newAlcoholContent.value=''; newPrice.value=''; newStyle.value=''">Add</button>
+    </div>
+  </div>
+</div>
+
+<div>
+  <app-beer-tap></app-beer-tap>
+</div>

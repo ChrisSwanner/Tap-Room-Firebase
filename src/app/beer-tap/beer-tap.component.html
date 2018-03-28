@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-body">
+    <br>
+    <ul>
+      <li id="kegList" [class]="alcoholContentColor(currentKeg)"  *ngFor="let currentKeg of kegs | async">
+        <h2>{{currentKeg.name}}</h2>
+        <p>${{currentKeg.price}} |
+        Style: {{currentKeg.style}} |
+        Pints Left: {{currentKeg.pintsLeft}} |
+        Alcohol Content: 0.{{currentKeg.alcoholContent}} ABV</p>
+      <div *ngIf="currentKeg.salePrice > 0">
+        <h4>Sale Price: ${{currentKeg.salePrice}}</h4>
+      </div>
+      <div *ngIf="currentRoute === '/admin'">
+      <button class="btn btn-dark" (click)="sellPint(currentKeg)">Sell Pint</button>
+      <button class="btn btn-dark" (click)="sellGrowler(currentKeg)">Sell 32oz Growler</button>
+      <button class="btn btn-dark" (click)="sellBigGrowler(currentKeg)">Sell 64oz Growler</button>
+      <input [(ngModel)]="percentage" placeholder="Sale Percentage" type="number" name="sale">
+      <button class="btn btn-dark" (click)="sale(currentKeg, percentage)">Put on Sale</button>
+      <button class="btn btn-dark" (click)="resetSale(currentKeg)">End Sale</button>
+      <app-edit-keg [selectedKeg]="currentKeg"></app-edit-keg>
+      </div>
+      </ul>
+    </div>
+  </div>
+
+
+  <div *ngIf="addingKeg">
+    <div class="card">
+      <div class="card-title">
+        <h1>Add New Keg</h1>
+      </div>
+      <div class="card-body">
+            <div>
+              <label>Beer Name</label>
+              <br>
+              <input #newName>
+            </div>
+
+            <div>
+              <label>Alcohol Content</label>
+              <input #newAlcoholContent>
+            </div>
+
+            <div>
+              <label>Price per Pint</label>
+              <input #newPrice>
+            </div>
+
+            <div>
+              <label for="style">Select Style</label>
+              <select #newStyle>
+                <option value="IPA">IPA</option>
+                <option value="APA">APA</option>
+                <option value="Red Ale">Red Ale</option>
+                <option value="Pilsner">Pilsner</option>
+                <option value="Brown Ale">Brown Ale</option>
+                <option value="Kolsch">Kolsch</option>
+                <option value="Belgian">Belgian</option>
+                <option value="Hefeweizen">Hefeweizen</option>
+                <option value="Sour">Sour</option>
+                <option value="Lager">Lager</option>
+                <option value="Stout">Stout</option>
+              </select>
+            </div>
+            <button class="btn btn-dark"(click)="submitForm(newName.value, newAlcoholContent.value, newPrice.value); newStyle.value='';">Add</button>
+          </div>
+      </div>
+    </div>
