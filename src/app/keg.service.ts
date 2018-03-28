@@ -27,14 +27,14 @@ export class KegService {
 
   updatePintsLeft(localUpdatedKeg) {
     let kegEntryInFirebase = this.getKegById(localUpdatedKeg.$key);
-    kegEntryInFirebase.update({pintsLeft: localUpdatedKeg.pintsLeft})
+    kegEntryInFirebase.update({pintsLeft: localUpdatedKeg.pintsLeft,})
 
   }
 
   updateSalePrice(localUpdatedKeg) {
     let kegEntryInFirebase = this.getKegById(localUpdatedKeg.$key);
-    kegEntryInFirebase.update({salePrice: localUpdatedKeg.salePrice})
-
+    kegEntryInFirebase.update({salePrice: localUpdatedKeg.salePrice,
+                              onSale: localUpdatedKeg.onSale})
   }
 
   updateKeg(localUpdatedKeg) {

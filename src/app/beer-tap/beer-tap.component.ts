@@ -16,15 +16,16 @@ export class BeerTapComponent {
   currentRoute: string = this.router.url;
   public isHappyHour: boolean = false;
   public addingKeg: boolean = false;
+  public kegFilter: boolean = false;
+
   constructor(private router: Router, private kegService: KegService) { }
   kegs: FirebaseListObservable<any[]>;
+  filteredKegs: Keg[] = [];
   kegDisplay;
 
   ngOnInit() {
     this.kegService.getKegs().subscribe(dataLastEmittedFromObserver => {
        this.kegDisplay= dataLastEmittedFromObserver;
-
-       console.log(this.kegDisplay.length);
     })
     let interval = setInterval(() => {
     let currentTime = new Date();
@@ -36,12 +37,13 @@ export class BeerTapComponent {
         this.kegService.updateSalePrice(this.kegDisplay[i]);
 
        }
-     } else if (currentTime.getHours() >= 21 ||(currentTime.getHours() < 17) ) {
+     } else if ((currentTime.getHours() >= 21) || (currentTime.getHours() < 17)) {
         this.isHappyHour = false;
         for (let i = 0; i < this.kegDisplay.length; i++) {
-          this.kegDisplay[i].salePrice = 0;
-          this.kegService.updateSalePrice(this.kegDisplay[i]);
-
+          if(this.kegDisplay[i].onSale = false) {
+            this.kegDisplay[i].salePrice = 0;
+            this.kegService.updateSalePrice(this.kegDisplay[i]);
+          }
         }
       }
     }, 1000);
@@ -106,12 +108,24 @@ export class BeerTapComponent {
   sale(currentKeg, percentage){
     let number = (currentKeg.price - (percentage * 0.01 * currentKeg.price));
     currentKeg.salePrice = Math.round(number * 1e2) / 1e2;
+    currentKeg.onSale = true;
     this.kegService.updateSalePrice(currentKeg);
   }
 
   resetSale(currentKeg){
     currentKeg.salePrice = 0;
+    currentKeg.onSale = false;
     this.kegService.updateSalePrice(currentKeg);
+  }
+
+  filterKegs(style){
+    this.filteredKegs = [];
+    this.kegFilter = true;
+    for(let i = 0; i < this.kegDisplay.length; i++){
+      if(this.kegDisplay[i].style === style){
+        this.filteredKegs.push(this.kegDisplay[i])
+      }
+    }
   }
 
 

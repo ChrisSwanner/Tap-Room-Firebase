@@ -24,6 +24,41 @@
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-title">
+      <h2>Filter Kegs</h2>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label for="style">Select Style</label>
+        <select class="form-control" name="style" [(ngModel)]="filterStyle">
+          <option value="IPA">IPA</option>
+          <option value="APA">APA</option>
+          <option value="Red Ale">Red Ale</option>
+          <option value="Pilsner">Pilsner</option>
+          <option value="Brown Ale">Brown Ale</option>
+          <option value="Kolsch">Kolsch</option>
+          <option value="Belgian">Belgian</option>
+          <option value="Hefeweizen">Hefeweizen</option>
+          <option value="Sour">Sour</option>
+          <option value="Lager">Lager</option>
+          <option value="Stout">Stout</option>
+        </select>
+      </div>
+      <button (click)="filterKegs(filterStyle)">Filter</button>
+      <br>
+      <div *ngIf="kegFilter">
+        <ul>
+          <li id="kegList" [class]="alcoholContentColor(keg)" *ngFor="let keg of filteredKegs">  <h2>{{keg.name}}</h2>
+            ${{keg.price}},
+            Style: {{keg.style}},
+            Pints Left: {{keg.pintsLeft}} ,
+            Alcohol Content: 0.{{keg.alcoholContent}}ABV</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 
   <div *ngIf="addingKeg">
     <div class="card">
