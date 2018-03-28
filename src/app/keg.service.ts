@@ -5,9 +5,13 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 
 @Injectable()
 export class KegService {
-
+  
+  constructor(private database: AngularFireDatabase) {
+    this.kegs = database.list('kegs');
+   }
 
   kegs: FirebaseListObservable<any[]>;
+
 
   getKegs() {
     return this.kegs;
@@ -17,9 +21,7 @@ export class KegService {
   this.kegs.push(newKeg);
   }
 
-  constructor(private database: AngularFireDatabase) {
-    this.kegs = database.list('kegs');
-   }
+
 
   getKegById(kegId: string) {
   return this.database.object('kegs/' + kegId);
